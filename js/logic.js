@@ -6,7 +6,6 @@ let allowMarkerSet = true;
 let dottedLine;
 let sv;
 let pointOfOrigin = { lat: -34.60380913945874, lng: -58.38190712194219 };
-const mapId = process.env.MAP_ID;
 
 const winPhrases = [
     "¡La clavaste!",
@@ -203,7 +202,7 @@ function initialize() { // Initialize
         center: pointOfOrigin,
         zoom: 14,
         streetViewControl: false,
-        mapId: mapId,
+        mapId: '46d582f1f0225e32',
         mapTypeId: google.maps.MapTypeId.SATELLITE,
         tilt: 0,
         disableDefaultUI: true

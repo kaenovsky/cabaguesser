@@ -1,5 +1,5 @@
 const config = {
-    googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY
+    googleMapsApiKey: 'AIzaSyDjJvV3BUw5P2SYceV4GZ27ECAW6LDfWQI'
 };
 
 function getGoogleMapsApiKey() {
