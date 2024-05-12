@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>OpenStreetGuesser</title>
+  <title>CabaGuesser</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -34,45 +34,38 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="introductionModalCenterTitle">Hi there!👋🗺</h5>
+          <h5 class="modal-title" id="introductionModalCenterTitle">Hola!👋🗺</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body" id="introductionModalCenterText">
-          Welcome to OpenStreetGuesser, an open-source street guessing game with custom functionalities.🏙🌐
+          Bienvenidx a <strong>CabaGuesser</strong>, una versión del proyecto de código abierto OpenStreetGuesser 🌍, enfocada en Buenos Aires.
           <br><br>
-          <b>How to play🎮</b>
+          <b>Cómo jugar🎮</b>
           <br>
-          1. Guess the location of the shown street view frame.
+          1. Reconocé el lugar que se muestra en la foto de la calle.
           <br>
-          2. Set a marker on the map to indicate your guess.
+          2. Colocá el marcador en el punto del mapa que creas correcto.
           <br>
-          3. Click the "Guess!" button.
+          3. Hacé click en "Intentar!" para comprobar si acertaste.
           <br><br>
-          The target location is always within the map frame. You can navigate the map and street view to pin down the
-          exact location. The closer you are, the higher your score will be.🎯
+          El punto de destino siempre está dentro del marco del mapa. Podés navegar el mapa y la vista de la calle hasta
+          encontrar la ubicación exacta. Cuanto más cerca estés, más alto será tu puntaje.🎯
           <br><br>
-          Choose your city:
-          <input type="text" id="cityInput" placeholder="Enter a city">
-          <a href="#" id="currentLocationButton" onclick="getCurrentLocation()">📍</a>
-          <svg xmlns="http://www.w3.org/2000/svg" id="validityMarkCheck" width="32" height="32" fill="currentColor"
-            class="bi bi-check" viewBox="0 0 16 16" style="color: rgb(0, 207, 0); visibility: hidden;">
-            <path
-              d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" />
-          </svg>
+          <input type="text" id="cityInput" value="Buenos Aires" disabled>
           <br><br>
-          Check out the source code at <a href="https://github.com/louis-e/OpenStreetGuesser" target="_blank">GitHub</a>!👩‍💻
+          Código fuente del proyecto original <a href="https://github.com/louis-e/OpenStreetGuesser" target="_blank">GitHub</a>!👩‍💻
         </div>
         <div class="modal-footer">
-          <button class="btn" id="informationButton" aria-hidden="true">More information</button>
-          <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Let's go!🚀</button>
+          <button class="btn" id="informationButton" aria-hidden="true">Más información</button>
+          <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Vamos!🚀</button>
         </div>
       </div>
     </div>
   </div>
 
-  <button class="button-1" id="guessBtn" onclick="guessBtnClick()">Guess!</button>
+  <button class="button-1" id="guessBtn" onclick="guessBtnClick()">Intentar!</button>
 
   <!-- Guess Result Modal -->
   <div id="resultModalCenter" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="resultModalCenterTitle"

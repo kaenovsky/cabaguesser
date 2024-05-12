@@ -5,47 +5,46 @@ let targetMarker;
 let allowMarkerSet = true;
 let dottedLine;
 let sv;
-let pointOfOrigin = { lat: 48.137154, lng: 11.576124 };
+let pointOfOrigin = { lat: -34.60380913945874, lng: -58.38190712194219 };
+const mapId = process.env.MAP_ID;
 
 const winPhrases = [
-    "You nailed it!",
-    "Perfection!",
-    "Spot on!",
-    "You're a OpenStreetGuesser pro!",
-    "Absolutely accurate!",
-    "Expert guesswork!",
-    "You're on fire!",
-    "Flawless victory!"
+    "¡La clavaste!",
+    "¡Épico!",
+    "¡Justo en el blanco!",
+    "¡Sos experto en CabaGuesser!",
+    "¡Absolutamente preciso!",
+    "¡Adivinanza de expertos!",
+    "¡Estás a pleno!",
+    "¡Impecable!",
 ];
 
 const closePhrases = [
-    "Not bad!",
-    "Close call!",
-    "Almost there!",
-    "Impressively close!",
-    "Nearly pinpointed it!",
-    "You're getting warmer!"
+    "¡No está mal!",
+    "¡Por poco!",
+    "¡Casi lo tenés!",
+    "¡Impresionantemente cerca!",
+    "¡Casi la clavás!",
+    "¡Te estás acercando!"
 ];
 
 const farAwayPhrases = [
-    "Room for improvement",
-    "Distant guess!",
-    "Keep exploring!",
-    "Next time, maybe!",
-    "Exploring new horizons!",
-    "Try a different approach next time "
+    "Hay margen de mejora",
+    "¡Intento lejano!",
+    "¡Seguí explorando!",
+    "¡La próxima vez, tal vez!",
+    "¡Explorando nuevos horizontes!",
+    "Tratá un enfoque diferente la próxima vez"
 ];
 
 const veryFarAwayPhrases = [
-    "You're exploring a different dimension!",
-    "Did you guess from outer space?",
-    "Way off the mark!",
-    "The world's a big place, keep searching!",
-    "Let's call this one a wild exploration!",
-    "Woah, what are you searching for?",
+    "¡Estás en otra dimensión!",
+    "¿Adivinaste desde la luna?",
+    "¡Muy lejos del objetivo!",
+    "Es una ciudad grande, ¡seguí buscando!",
+    "¡La pifiaste feo!",
+    "Nada que ver, ¡seguí intentando!"
 ];
-
-
 
 function adjustLayout() { // Adjust layout on resize
     var map = document.getElementById("map");
@@ -103,6 +102,22 @@ function generateRandomCoordMap() { // Generate random coordinates within map bo
     const lat = centerLat + latOffset * (northEast.lat() - southWest.lat());
     const lng = centerLng + lngOffset * (northEast.lng() - southWest.lng());
 
+
+ /* 
+    TBD: include easter eggs of Buenos Aires landmarks
+
+    obelisco = { lat: -34.60380913945874, lng: -58.38190712194219 };
+    congreso = { lat: -34.609, lng: -58.392 };
+    casarosada = { lat: -34.608, lng: -58.370 };
+    coto = { lat: -34.69236070696122, lng: -58.42099500875825 };
+
+    eggs = [obelisco, congreso, casarosada, coto];
+
+    // easter egg
+    // return eggs[Math.floor(Math.random() * eggs.length)]; 
+
+*/
+
     return { lat: lat, lng: lng };
 }
 
@@ -154,34 +169,10 @@ function getCityCornerCoordinates(centerPoint) { // Get city corner coordinates 
     return { northEast: cityNorthEast, southWest: citySouthWest };
 }
 
-function getCurrentLocation() { // Get current device location
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            const lat = position.coords.latitude;
-            const lng = position.coords.longitude;
-
-            getCityNameByLatLng(lat, lng, function (city) {
-                if (city) {
-                    document.getElementById('cityInput').value = city;
-                    document.getElementById('validityMarkCheck').style.visibility = 'visible';
-                    pointOfOrigin = { lat: lat, lng: lng };
-                    resetGame();
-                    console.log("Detected City: " + city);
-                } else {
-                    console.log("City not found");
-                }
-            });
-        });
-    } else {
-        console.log("Geolocation is not supported by this browser.");
-    }
-}
-
 function initialize() { // Initialize
     document.getElementById("informationButton").onclick = function () {
         window.open("https://louisdev.de", "_blank");
     };
-
 
     const cityInput = document.getElementById('cityInput');
     const autocomplete = new google.maps.places.Autocomplete(cityInput);
@@ -208,12 +199,11 @@ function initialize() { // Initialize
         }
     });
 
-
     map = new google.maps.Map(document.getElementById("map"), { // Initialize map
         center: pointOfOrigin,
         zoom: 14,
         streetViewControl: false,
-        mapId: 'd4fe02c4af5e4ff6',
+        mapId: mapId,
         mapTypeId: google.maps.MapTypeId.SATELLITE,
         tilt: 0,
         disableDefaultUI: true
@@ -315,7 +305,7 @@ function resetGame() { // Reset game
             resetGame()
         );;
 
-    document.getElementById("guessBtn").innerHTML = "Guess!";
+    document.getElementById("guessBtn").innerHTML = "Intentar!";
 }
 
 async function guessBtnClick() { // Guess button click
@@ -324,7 +314,7 @@ async function guessBtnClick() { // Guess button click
 
     if (!guessMarker) { // No marker set
         resultModalCenterTitle.innerHTML = "Oops!😮";
-        resultModalCenterText.innerHTML = "Set a marker first!";
+        resultModalCenterText.innerHTML = "Primero debes colocar un marcador en el mapa!";
         $('#resultModalCenter').modal('show');
         return;
     }
@@ -337,7 +327,7 @@ async function guessBtnClick() { // Guess button click
     allowMarkerSet = false;
     guessMarker.setAnimation(null);
     guessMarker.setDraggable(false);
-    document.getElementById("guessBtn").innerHTML = "New round";
+    document.getElementById("guessBtn").innerHTML = "Nueva ronda";
 
     // Draw target marker
     if (targetMarker) {
@@ -393,10 +383,10 @@ async function guessBtnClick() { // Guess button click
         guessMarker.getPosition().lng()
     ).toFixed(2);
 
-    resultModalCenterText.innerHTML = "Your guess is " + distance + " km away!";
+    resultModalCenterText.innerHTML = "Tu intento está a " + distance + " km de distancia!";
     if (distance < 0.05) {
         resultModalCenterTitle.innerHTML = winPhrases[Math.floor(Math.random() * winPhrases.length)] + "🤯";
-        resultModalCenterText.innerHTML = "Absolutely on point!";
+        resultModalCenterText.innerHTML = "¡Totalmente acertado!";
         startConfetti();
         setTimeout(function () { stopConfetti(); }, 4000);
     } else if (distance < 0.12) {
