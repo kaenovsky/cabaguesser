@@ -84,53 +84,43 @@ function degToRad(deg) {
     return deg * (Math.PI / 180);
 }
 
-function generateRandomCoordMap() { // Generate random coordinates within map bounds
-    const bounds = map.getBounds();
-    const northEast = bounds.getNorthEast();
-    const southWest = bounds.getSouthWest();
+function generateRandomFixedCoordMap() {
 
-    // Calculate the center of the map bounds
-    const centerLat = (northEast.lat() + southWest.lat()) / 2;
-    const centerLng = (northEast.lng() + southWest.lng()) / 2;
+const landmarks = [
+    { lat: -34.54195736583065, lng: -58.4360634310488 },
+    { lat: -34.61143532619618, lng: -58.39824998058475 },
+    { lat: -34.588182471276866, lng: -58.4536965711264 },
+    { lat: -34.607355886910135, lng: -58.41868037737263 },
+    { lat: -34.57300723215053, lng: -58.416929836267464 },
+    { lat: -34.58258818864084, lng: -58.47946706372144 },
+    { lat: -34.62261380330833, lng: -58.3886438137978 },
+    { lat: -34.59197475044357, lng: -58.44578039636387 },
+    { lat: -34.58477105776043, lng: -58.41076331765551 },
+    { lat: -34.60340532070307, lng: -58.41801263558946 },
+    { lat: -34.619777792735796, lng: -58.4153193773059 },
+    { lat: -34.628469553620384, lng: -58.41988127117157 },
+    { lat: -34.63220437833412, lng: -58.43475635276855 },
+    { lat: -34.602165951719485, lng: -58.38438943436553 },
+    { lat: -34.59602582004414, lng: -58.39137358099236 },
+    { lat: -34.60064789939566, lng: -58.39423977852984 },
+    { lat: -34.63303910382637, lng: -58.380282813507336 },
+    { lat: -34.64281358204076, lng: -58.38967051043283 },
+    { lat: -34.638150723201285, lng: -58.411174696940215 },
+    { lat: -34.61146321203356, lng: -58.410256574253424 },
+    { lat: -34.61476472553586, lng: -58.42861450798497 },
+    { lat: -34.607425408780074, lng: -58.37474109326841 },
+    { lat: -34.6008132402474, lng: -58.518198377925216 },
+    { lat: -34.616105533203424, lng: -58.44049025031336 },
+    { lat: -34.648967493097686, lng: -58.377771704910465 },
+    { lat: -34.61124242616171, lng: -58.427080096342905 },
+    { lat: -34.6121573793927, lng: -58.36803351473128 },
+    { lat: -34.597755443080715, lng: -58.42492825891024 },
+    { lat: -34.60753720616659, lng: -58.385444256462364 },
+    { lat: -34.61784015918677, lng: -58.385809626999944 },
+    { lat: -34.6066586901461, lng: -58.386364215955204 }
+];
 
-    // Generate random offsets using a normal distribution
-    const latOffset = generateRandomOffset();
-    const lngOffset = generateRandomOffset();
-
-    // Apply the offsets to the center coordinates
-    const lat = centerLat + latOffset * (northEast.lat() - southWest.lat());
-    const lng = centerLng + lngOffset * (northEast.lng() - southWest.lng());
-
-
- /* 
-    TBD: include easter eggs of Buenos Aires landmarks
-
-    obelisco = { lat: -34.60380913945874, lng: -58.38190712194219 };
-    congreso = { lat: -34.609, lng: -58.392 };
-    casarosada = { lat: -34.608, lng: -58.370 };
-    coto = { lat: -34.69236070696122, lng: -58.42099500875825 };
-
-    eggs = [obelisco, congreso, casarosada, coto];
-
-    // easter egg
-    // return eggs[Math.floor(Math.random() * eggs.length)]; 
-
-*/
-
-    return { lat: lat, lng: lng };
-}
-
-function generateRandomOffset() { // Generate random offset using a normal distribution
-    const stdDev = 0.2;
-    let offset = 0;
-
-    for (let i = 0; i < 6; i++) {
-        offset += Math.random();
-    }
-
-    offset -= 3;
-    offset *= stdDev;
-    return offset;
+return landmarks[Math.floor(Math.random() * landmarks.length)];
 }
 
 function getCityNameByLatLng(latitude, longitude, callback) { // Get city name by coordinates
@@ -209,7 +199,7 @@ function initialize() { // Initialize
     });
 
     google.maps.event.addListenerOnce(map, 'idle', function () {
-        const coordinates = generateRandomCoordMap();
+        const coordinates = generateRandomFixedCoordMap();
         sv = new google.maps.StreetViewService();
 
         panorama = new google.maps.StreetViewPanorama(
@@ -297,7 +287,7 @@ function resetGame() { // Reset game
     bounds.extend(cornerCoordinates.southWest);
     map.fitBounds(bounds);
     
-    const coordinates = generateRandomCoordMap();
+    const coordinates = generateRandomFixedCoordMap();
     sv.getPanorama({ location: coordinates, radius: 10000 })
         .then(processSVData)
         .catch((e) =>
@@ -313,7 +303,7 @@ async function guessBtnClick() { // Guess button click
 
     if (!guessMarker) { // No marker set
         resultModalCenterTitle.innerHTML = "Oops!😮";
-        resultModalCenterText.innerHTML = "Primero debes colocar un marcador en el mapa!";
+        resultModalCenterText.innerHTML = "Primero tenés que colocar un marcador en el mapa!";
         $('#resultModalCenter').modal('show');
         return;
     }
@@ -388,11 +378,11 @@ async function guessBtnClick() { // Guess button click
         resultModalCenterText.innerHTML = "¡Totalmente acertado!";
         startConfetti();
         setTimeout(function () { stopConfetti(); }, 4000);
-    } else if (distance < 0.12) {
+    } else if (distance < 0.20) {
         resultModalCenterTitle.innerHTML = winPhrases[Math.floor(Math.random() * winPhrases.length)] + "🥳";
         startConfetti();
         setTimeout(function () { stopConfetti(); }, 3000);
-    } else if (distance < 0.75) {
+    } else if (distance < 1.15) {
         resultModalCenterTitle.innerHTML = closePhrases[Math.floor(Math.random() * closePhrases.length)] + "😎";
     } else if (distance > 3.0) {
         resultModalCenterTitle.innerHTML = veryFarAwayPhrases[Math.floor(Math.random() * veryFarAwayPhrases.length)] + "😞";
