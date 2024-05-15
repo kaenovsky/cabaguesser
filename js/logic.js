@@ -200,6 +200,8 @@ function initialize() { // Initialize
 
     google.maps.event.addListenerOnce(map, 'idle', function () {
         const coordinates = generateRandomFixedCoordMap();
+        // debug only
+        console.log("DEBUG: coordinates generated: ", coordinates);
         sv = new google.maps.StreetViewService();
 
         panorama = new google.maps.StreetViewPanorama(
@@ -294,6 +296,9 @@ function resetGame() { // Reset game
             resetGame()
         );;
 
+    // debug only
+    console.log("DEBUG: coordinates generated: ", coordinates);
+    
     document.getElementById("guessBtn").innerHTML = "Intentar!";
 }
 
