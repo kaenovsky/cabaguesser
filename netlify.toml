@@ -1,0 +1,7 @@
+# example netlify.toml
+[build]
+  functions = "functions"
+  publish = "public"
+
+[dev]
+  port = 5500
