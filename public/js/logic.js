@@ -168,10 +168,6 @@ function getCityCornerCoordinates(centerPoint) { // Get city corner coordinates 
 async function initialize() { // Initialize
     await fetchData();
 
-    document.getElementById("informationButton").onclick = function () {
-        window.open("https://louisdev.de", "_blank");
-    };
-
     const cityInput = document.getElementById('cityInput');
     const autocomplete = new google.maps.places.Autocomplete(cityInput);
 

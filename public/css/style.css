@@ -81,3 +81,19 @@ body {
 .modal-backdrop {
     z-index: 10000;        
 }
+
+/* logo */
+
+.logo-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: .5rem;
+}
+
+.logo {
+    width: 100px;
+    height: 100px;
+    background: url(../images/logo.png) no-repeat;
+    background-size: 100%;
+    z-index: 10000;
+}
